@@ -77,6 +77,7 @@ class HomeViewController: UIViewController {
             
         }) { (strMessage) in
             self.stopIndicator()
+            self.showAlert(withTitleAndMessage: Constants.AlertKey, message: strMessage)
             print(strMessage)
         }
         

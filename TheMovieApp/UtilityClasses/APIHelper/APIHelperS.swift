@@ -59,9 +59,9 @@ class APIHelperS: NSObject {
         var urlString : String = Constants.BASEURL
         urlString = String(format: "%@%@%@",urlString,methodName,andQueryString)
         
-//        print(urlString)
+        //        print(urlString)
         let stringEncode = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-
+        
         let myURL = NSURL(string: stringEncode!)!
         let request = NSMutableURLRequest(url: myURL as URL)
         request.httpMethod = Constants.HTTPMethodGet
@@ -71,16 +71,19 @@ class APIHelperS: NSObject {
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
-//            print(response!)
+            //            print(response!)
             // Your completion handler code here
-            let responseString = String(data: data!, encoding: .utf8)
-            
-            if  let dict1 = responseString?.convertToDictionary() as? NSDictionary {
-                successHandler(dict1)
-            } else {
-                failureHandler("Some error occured")
+            if let dataReceived = data {
+                let responseString = String(data: dataReceived, encoding: .utf8)
+                
+                if  let dict1 = responseString?.convertToDictionary() as? NSDictionary {
+                    successHandler(dict1)
+                } else {
+                    failureHandler("Some error occured")
+                }
+                
             }
-            
+            failureHandler("Some error occured")
         }
         task.resume()
     }
