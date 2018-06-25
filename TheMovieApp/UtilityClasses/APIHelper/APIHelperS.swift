@@ -81,9 +81,9 @@ class APIHelperS: NSObject {
                 } else {
                     failureHandler("Some error occured")
                 }
-                
+            } else {
+                failureHandler("Some error occured")
             }
-            failureHandler("Some error occured")
         }
         task.resume()
     }
